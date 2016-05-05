@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import ParseFacebookUtilsV4
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +18,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        Parse.setApplicationId("cUmMQxl2EelPb0QC3NnpawANsnQzr10LETaCJQeM",
+                               clientKey: "xmDweLdAOTeZO8H7WJ774jux6BkWFoRDGE71w57u")
+        
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+        
+        PFUser.enableRevocableSessionInBackground()
+        
         return true
+        
+    }
+    
+    func application(application: UIApplication,
+                     openURL url: NSURL,
+                             sourceApplication: String?,
+                             annotation: AnyObject?) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application,
+                                                                     openURL: url,
+                                                                     sourceApplication: sourceApplication,
+                                                                     annotation: annotation)
     }
 
     func applicationWillResignActive(application: UIApplication) {
